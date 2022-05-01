@@ -135,6 +135,12 @@ namespace Erasmus.Web.Data
                 .WithMany(z => z.Faculties)
                 .HasForeignKey(z => z.UniversityId);
 
+            //NonGovProject - ProjectType
+            builder.Entity<NonGovProject>()
+                .HasOne<ProjectType>(z => z.ProjectType)
+                .WithMany(z => z.NonGovProjects)
+                .HasForeignKey(z => z.ProjectTypeId);
+
 
             //MANY TO MANY
             //Organizer - NonGovProject

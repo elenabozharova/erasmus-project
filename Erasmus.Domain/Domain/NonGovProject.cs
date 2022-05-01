@@ -9,8 +9,10 @@ namespace Erasmus.Domain.DomainModels
     {
         public string ProjectTitle { get; set; }
         // TODO: create a table for type
-        public string ProjectType { get; set; } // ex. Language learning
+        // public string ProjectType { get; set; } // ex. Language learning
 
+        public Guid? ProjectTypeId { get; set; }
+        public ProjectType ProjectType { get; set; }
         public string ProjectDescription { get; set; }
         //TODO: add city table
         public string Location { get; set; }
