@@ -80,6 +80,12 @@ namespace Erasmus.Web.Data
                                                     new IdentityRole { Id = "94a5b35b-ef16-434d-b99c-6ecf3c88b40a", Name = "Participant", NormalizedName = "PARTICIPANT" },
                                                     new IdentityRole { Name = "Organizer", NormalizedName = "ORGANIZER" });
 
+
+            builder.Entity<ProjectType>().HasData(new ProjectType { Id = Guid.NewGuid(), Type = "Language Learning" },
+                                                  new ProjectType { Id = Guid.NewGuid(), Type = "Computer Science Learning" },
+                                                  new ProjectType { Id = Guid.NewGuid(), Type = "Business and Marketing" },
+                                                  new ProjectType { Id = Guid.NewGuid(), Type = "Politics" });
+
             builder.Entity<Admin>()
                    .HasOne<ErasmusUser>(s => s.BaseRecord)
                    .WithOne(z => z.Admin).HasForeignKey<ErasmusUser>(z => z.AdminId);
