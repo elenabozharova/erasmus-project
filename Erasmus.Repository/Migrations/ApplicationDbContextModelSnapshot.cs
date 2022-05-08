@@ -397,17 +397,14 @@ namespace Erasmus.Repository.Migrations
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "53a52af8-83b8-4e7b-a39d-89294e3dbadc",
-                            ConcurrencyStamp = "e41d931e-5d38-4a7b-9508-e16067748d4b",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEKFzHFg1YqoIvOyaStgPNcVL7+v/MEhVRz/jrdLhD6ZOm7Z1UucZjfmWH+p9lRGeJQ==",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP6+HRQ9ryLpyH+bYKOauVDJQ+PfrTz/PIV6Ejej9r5zjwUROVPm8t13uBMWar+Rgw==",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "4a578420-a53f-42bf-9e55-bbca9c154029",
-                            SecurityStamp = "c32e9e65-f755-4a1e-95a6-56c7fdc55add",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -521,7 +518,6 @@ namespace Erasmus.Repository.Migrations
                         {
                             Id = "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7",
                             ConcurrencyStamp = "b755ddf6-3a40-4ff4-94f8-b48d36604e38",
-                            ConcurrencyStamp = "f23516ab-92d9-4373-8b51-af9a47089f88",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
@@ -536,7 +532,6 @@ namespace Erasmus.Repository.Migrations
                         {
                             Id = "4eb6f781-cba6-4873-ac70-7539916f1a17",
                             ConcurrencyStamp = "455acad9-e1ab-424a-b4f5-a33d24903065",
-                            ConcurrencyStamp = "35868977-50f0-47fc-9229-1eb3f3a8c6f7",
                             Name = "User",
                             NormalizedName = "USER"
                         },
@@ -551,7 +546,6 @@ namespace Erasmus.Repository.Migrations
                         {
                             Id = "94a5b35b-ef16-434d-b99c-6ecf3c88b40a",
                             ConcurrencyStamp = "aa3ecde0-5eea-45d4-8766-b66ed0641e72",
-                            ConcurrencyStamp = "dfcb69d0-36ab-4ce6-9a43-159f23c6a515",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         },
@@ -559,8 +553,6 @@ namespace Erasmus.Repository.Migrations
                         {
                             Id = "a06137ff-e363-4441-a340-569663a0cc0e",
                             ConcurrencyStamp = "8853657f-fa70-41ff-a107-11447d066356",
-                            Id = "807d92d8-5eca-4587-88c8-03fbfd0cbc8a",
-                            ConcurrencyStamp = "a57648c3-b979-48b0-a9ad-74fb74257c6c",
                             Name = "Organizer",
                             NormalizedName = "ORGANIZER"
                         });
