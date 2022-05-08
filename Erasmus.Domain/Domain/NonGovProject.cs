@@ -14,8 +14,9 @@ namespace Erasmus.Domain.DomainModels
         public Guid? ProjectTypeId { get; set; }
         public ProjectType ProjectType { get; set; }
         public string ProjectDescription { get; set; }
-        //TODO: add city table
-        public string Location { get; set; }
+
+        public Guid CityId { get; set; }
+        public City City { get; set; }
         public DateTime Deadline { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
