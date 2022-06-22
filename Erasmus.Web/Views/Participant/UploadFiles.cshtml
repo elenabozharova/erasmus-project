@@ -6,6 +6,10 @@
 *@
 @{
 }
+
+<head>
+    <link href="/css/approve_reject.css" rel="stylesheet" type="text/css">
+</head>
 <style>
     .text-blue {
         color: #263F6B;
@@ -104,7 +108,31 @@
             </div>    
         </form> 
     </div>
-  
+}
+else if(Model.ReviewStatus == ApplicationStatus.InReview)
+{
+    <div class="review-container">
+       <div class="review"> 
+           <h3 class="review-title">Your application is sent for review to the organizer!</h3>
+       </div>
+    </div>
+    
+}
+else if(Model.ReviewStatus == ApplicationStatus.Approved)
+{<div class="message-approve-container">
+    <div class="approved">
+        <h3 class="approved-title">Your application is approved!</h3>
+        <p class="approved-text">Please be ready before the start date.</p>
+    </div>
+</div>
+}
+else if(Model.ReviewStatus == ApplicationStatus.Rejected)
+{
+    <div class="message-rejected-container">
+    <div class="rejected">
+        <h3 class="rejected-title">Your application is rejected</h3>
+    </div>
+</div>
 }
   <div class="row justify-content-center mt-3 col-7 " style="margin-left:270px">
     <a class="btn btn-lg btn-block text-light" asp-area="" asp-controller="NonGovProjects" asp-action="Index" style="background-color:#263F6B;">
@@ -125,8 +153,9 @@
                 disableElement($("#submit-application-btn"));
             }
             else{
-                enableElement()
+                enableElement($("#submit-application-btn"));
             }
+
             $('.file-input').click(function(){
                 $('#btn-submit').show();
             });
