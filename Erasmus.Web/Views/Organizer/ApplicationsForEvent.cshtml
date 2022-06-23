@@ -13,6 +13,21 @@
     {
         max-width: 300px;
     }
+
+    .approved-div
+    {
+        color: green;
+    }
+
+    .rejected-div
+    {
+        color: red;
+    }
+
+    .inReview-div
+    {
+        color: darkblue;
+    }
 </style>
 <h1>Applications for @Model.ProjectName</h1>
 <hr />
@@ -45,10 +60,15 @@ else
                 {
                     <a asp-controller="Organizer" asp-action="Approve" asp-route-id="@application.Id" class="btn btn-success">Approve</a>
                     <a asp-controller="Organizer" asp-action="Reject" asp-route-id="@application.Id" class="btn btn-danger">Reject</a>
+                     <p class="inReview-div">@application.ReviewStatus</p>
                 }
-                else
+                else if(application.ReviewStatus == Erasmus.Domain.Domain.ApplicationStatus.Approved)
                 {
-                    <p class="status">@application.ReviewStatus</p>
+                    <p class="approved-div">@application.ReviewStatus</p>
+                }
+                else if(application.ReviewStatus == Erasmus.Domain.Domain.ApplicationStatus.Rejected)
+                {
+                    <p class="rejected-div">@application.ReviewStatus</p>
                 }
             </div>
         </div>
