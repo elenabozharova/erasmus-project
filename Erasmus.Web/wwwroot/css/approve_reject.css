@@ -99,3 +99,7 @@
     width:4rem;
     margin-bottom:1rem;
 }
+
+.application:last-child{
+    margin-bottom:4rem;
+}
