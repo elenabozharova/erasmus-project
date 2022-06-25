@@ -8,7 +8,7 @@ namespace Erasmus.Repository.Interface
     public interface INonGovProjectOrganizerRepository
     {
         List<NonGovProjectOrganizer> GetNonGovProjectOrganizersForProject(Guid projectId);
-        NonGovProjectOrganizer Get(string organizerId);
+       
 
     }
 }

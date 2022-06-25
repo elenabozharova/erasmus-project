@@ -22,9 +22,10 @@ namespace Erasmus.Service.Implementation
         private readonly IRepository<Email> _emailRepository;
         private readonly IEmailService _emailService;
         private readonly INonGovProjectService _nonGovProjectService;
+        private readonly IOrganizerRepository _organizerRepository;
         public ParticipantService(IParticipantRepository participantRepository, INonGovProjectRepository nonGovProjectRepository,
             IParticipantApplicationRepository participantApplicationRepository, IUploadedFileRepository uploadedFileRepository,
-            IRepository<Email> emailRepository, IEmailService emailService, INonGovProjectService nonGovProjectService)
+            IRepository<Email> emailRepository, IEmailService emailService, INonGovProjectService nonGovProjectService, IOrganizerRepository organizerRepository)
         {
             _participantRepository = participantRepository;
             _nonGovProjectRepository = nonGovProjectRepository;
@@ -33,6 +34,7 @@ namespace Erasmus.Service.Implementation
             _emailRepository = emailRepository;
             _emailService = emailService;
             _nonGovProjectService = nonGovProjectService;
+            _organizerRepository = organizerRepository;
         }
 
         public async Task<bool> Apply(string participantId, Guid projectId)
@@ -66,11 +68,12 @@ namespace Erasmus.Service.Implementation
             if (nonGovProjectOrganizer == null) {
                 return true;
             }
+            ErasmusUser organizer = _organizerRepository.GetUser(nonGovProjectOrganizer.OrganizerId);
             Email email = new Email();
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("You have one new participant application for your project: " + string.Concat("'", project.ProjectTitle, "'.") + "The participant with email " + string.Concat("", participant.BaseRecord.Email, ",") + " send his application right now. You can check all details in your organizer profile.");
 
-            email.MailTo = nonGovProjectOrganizer.Organizer.BaseRecord.Email;
+            email.MailTo = organizer.Email;
             email.Subject = "New application for the project " + project.ProjectTitle;
             email.Content = stringBuilder.ToString();
             email.Sent = true;
