@@ -51,9 +51,9 @@
                     <div class="col-6 ml-5" style="margin-left:100px;">
                         <h5 class="card-title text-blue">@record.Project.ProjectTitle</h5>
                         <p class="card-text text-blue">@record.Project.ProjectDescription</p>
-                        <h3>Deadline for application: @record.Project.Deadline</h3>
-                        <p class="project-date">Start Date: @record.Project.StartDate</p>
-                        <p class="project-date">End Date: @record.Project.StartDate</p>
+                        <p class="project-date">Deadline for application: @record.Project.Deadline.ToShortDateString()</p>
+                        <p class="project-date">Start Date: @record.Project.StartDate.ToShortDateString()</p>
+                        <p class="project-date">End Date: @record.Project.EndDate.ToShortDateString()</p>
                         <div class="row w-100">
                              <div class="">
                                <a  class="btn btn-outline-primary col-4" asp-controller="NonGovProjects" asp-action="Details" asp-route-eventid="@record.Project.Id">See more <i class="fa fa-info" aria-hidden="true"></i></a>
@@ -104,11 +104,6 @@
     </p>
     <br/>
 </div>
-@if(User.IsInRole("Organizer"))
-{
-   <a class="btn btn-outline-primary create-button" asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
-}
-
 
 </div>
 
