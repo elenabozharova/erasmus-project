@@ -4,14 +4,16 @@ using Erasmus.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Erasmus.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220627194339_addedCity")]
+    partial class addedCity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace Erasmus.Repository.Migrations
                         new
                         {
                             Id = new Guid("3eb96050-5828-4b14-9c64-ad1cfa2738ef"),
-                            CountryId = new Guid("9c3f0035-42be-496f-9848-6f8dbfe21a8b"),
+                            CountryId = new Guid("3eb96050-5828-4b14-9c64-ad1cfa2738ef"),
                             Name = "Kastamonu"
                         },
                         new
@@ -361,15 +363,15 @@ namespace Erasmus.Repository.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fb3d0e77-155e-4064-8a6c-c30ee8b668d4",
+                            ConcurrencyStamp = "8fd0e0ad-222d-4d9b-80c7-c83207cd1d4a",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFYZqtuCVjwbsH+EOZWS59amDphqE8rke5JGrH/y/1D2qqR3abdTJIhbxiTbyy/gcA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFh91X41GzHf3GgnLdNgV7xlbLW6n5L1C1Pua9vwRNbDs2+D5hgsE+l8QGkizA5XJQ==",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "d52b6a72-66f3-4ad0-a707-997f8116027b",
+                            SecurityStamp = "dc4c110d-f149-4628-9615-eed8feea2d28",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -543,22 +545,22 @@ namespace Erasmus.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a7700417-0c78-42a4-96ae-8bde0ab9a581"),
+                            Id = new Guid("bb6aa271-1925-4094-8c96-34021546c9c2"),
                             Type = "Language Learning"
                         },
                         new
                         {
-                            Id = new Guid("05c90c14-30d9-4c57-a894-76560939d791"),
+                            Id = new Guid("217176b3-0c63-4efd-9acd-6fa11191ca59"),
                             Type = "Computer Science Learning"
                         },
                         new
                         {
-                            Id = new Guid("f58de588-0f89-426e-acbb-5449e89d29bb"),
+                            Id = new Guid("e1b0c56b-cf99-4e1a-901c-53ec2030625f"),
                             Type = "Business and Marketing"
                         },
                         new
                         {
-                            Id = new Guid("3f5a6b15-b28c-47a5-92b6-8fb896075dae"),
+                            Id = new Guid("db6dd5ff-6e51-4043-8099-787ff376658c"),
                             Type = "Politics"
                         });
                 });
@@ -664,28 +666,28 @@ namespace Erasmus.Repository.Migrations
                         new
                         {
                             Id = "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7",
-                            ConcurrencyStamp = "fbe341b2-c3eb-4bc6-b576-cd2768765375",
+                            ConcurrencyStamp = "76dfb005-cbaa-476e-8e69-7ec11af2e004",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "4eb6f781-cba6-4873-ac70-7539916f1a17",
-                            ConcurrencyStamp = "4f71ca80-95a2-471c-95a7-da5ed2477880",
+                            ConcurrencyStamp = "720570a9-591a-48ad-8423-ef22159ee2cf",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "94a5b35b-ef16-434d-b99c-6ecf3c88b40a",
-                            ConcurrencyStamp = "4dc93787-44b2-4bdb-9ed1-4a8fa7d7de81",
+                            ConcurrencyStamp = "499d4335-2c52-43b1-ab15-526c641e2442",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         },
                         new
                         {
                             Id = "a06137ff-e363-4441-a340-569663a0cc0e",
-                            ConcurrencyStamp = "9f73b42c-a288-4996-8461-95be477812a8",
+                            ConcurrencyStamp = "6bd7661e-7224-4d6d-9058-92bd98e99a7f",
                             Name = "Organizer",
                             NormalizedName = "ORGANIZER"
                         });

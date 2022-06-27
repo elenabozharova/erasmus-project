@@ -85,10 +85,20 @@ namespace Erasmus.Web.Data
                                                     new IdentityRole { Id = "a06137ff-e363-4441-a340-569663a0cc0e", Name = "Organizer", NormalizedName = "ORGANIZER" });
 
             builder.Entity<Country>().HasData(new Country { Id = Guid.Parse("57242f19-0405-494c-b4bc-bdb52a725442"), Name = "Macedonia" },
-                                              new Country { Id = Guid.Parse(" cbec8be4-6325-4b2f-b08e-22d709c27688"), Name = "UK" });
+                                              new Country { Id = Guid.Parse("cbec8be4-6325-4b2f-b08e-22d709c27688"), Name = "UK" },
+                                              new Country { Id = Guid.Parse("9c3f0035-42be-496f-9848-6f8dbfe21a8b"), Name = "Turkey" },
+                                              new Country { Id = Guid.Parse("e55179e7-b895-41be-b713-4f65f6d7c724"), Name = "Latvia" },
+                                              new Country { Id = Guid.Parse("f2a6d1ae-3a1b-422d-8322-6c65fbd67e8a"), Name = "Croatia" },
+                                              new Country { Id = Guid.Parse("a34904ad-50fc-4acc-9779-aa1e2f9d7d49"), Name = "Portugal" });
+
 
             builder.Entity<City>().HasData(new City { Id = Guid.Parse("415c3843-4bf9-4a21-8696-6781a66204e2"), Name = "Skopje", CountryId = Guid.Parse("57242f19-0405-494c-b4bc-bdb52a725442") },
-                                           new City { Id = Guid.Parse("6c3175f9-55e1-423c-a721-ee2ce7af688c"), Name = "London", CountryId = Guid.Parse("cbec8be4-6325-4b2f-b08e-22d709c27688") });
+                                           new City { Id = Guid.Parse("6c3175f9-55e1-423c-a721-ee2ce7af688c"), Name = "London", CountryId = Guid.Parse("cbec8be4-6325-4b2f-b08e-22d709c27688") },
+                                           new City { Id = Guid.Parse("3eb96050-5828-4b14-9c64-ad1cfa2738ef"), Name = "Kastamonu", CountryId = Guid.Parse("9c3f0035-42be-496f-9848-6f8dbfe21a8b") },
+                                           new City { Id = Guid.Parse("26bc664b-88c4-4d80-b0f3-200b31d03673"), Name = "Bernāti", CountryId = Guid.Parse("e55179e7-b895-41be-b713-4f65f6d7c724") },
+                                           new City { Id = Guid.Parse("1efa10f3-37e9-42b8-b7a6-c8d773c71f47"), Name = "Zagreb", CountryId = Guid.Parse("f2a6d1ae-3a1b-422d-8322-6c65fbd67e8a") },
+                                           new City { Id = Guid.Parse("5139f7c4-0010-4df3-a6be-570ba90cd8b1"), Name = "Lisbon", CountryId = Guid.Parse("a34904ad-50fc-4acc-9779-aa1e2f9d7d49") });
+
 
             builder.Entity<ProjectType>().HasData(new ProjectType { Id = Guid.NewGuid(), Type = "Language Learning" },
                                                  new ProjectType { Id = Guid.NewGuid(), Type = "Computer Science Learning" },

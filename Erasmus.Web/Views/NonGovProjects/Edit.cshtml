@@ -10,7 +10,7 @@
     <label>Title</label>
     <input class="form-control" asp-for="ProjectTitle" />
     <label>Description</label>
-    <input class="form-control" asp-for="ProjectDescription" />
+    <textarea class="form-control" asp-for="ProjectDescription"></textarea>
     
     <label>Start Date</label>
     @Html.EditorFor(z => z.StartDate, new { htmlAttributes = new { @class="form-control" }})
