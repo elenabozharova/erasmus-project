@@ -29,6 +29,11 @@
     {
         font-size: 10pt;
     }
+
+    .edit-btn-div{
+        margin-left: -568px;
+        margin-top: -50px;
+    }
 </style>
 <div class="container w-75 text-blue">
     <form class="form-inline my-2 my-lg-0 mb-5" asp-controller="NonGovProjects" asp-action="Index" method="get">
@@ -88,10 +93,12 @@
             </div>
     }
 </div>
+<div class="edit-btn-div d-flex justify-content-start">
 @if(User.IsInRole("Organizer"))
 {
    <a class="btn-create btn btn-lg btn-block btn-outline-primary " asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
 }
+</div>
 
 <div class="mt-5 text-blue mb-5">
     <h1 class="h1 mb-3">How to apply?</h1>
