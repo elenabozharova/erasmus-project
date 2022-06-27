@@ -57,10 +57,9 @@
         <div class="col-5">
         <div>
             <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedCV.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV.Id" aria-hidden="true"></i></a>
-            @if (Model.ReviewStatus == ApplicationStatus.NotCompleted || Model.ReviewStatus == ApplicationStatus.Rejected)
+            @if(Model.ReviewStatus == ApplicationStatus.NotCompleted)
             {
-                <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedCV.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
-
+               <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedCV.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>         
             }
         </div>
         </div>
@@ -85,12 +84,11 @@
         <div class="row justify-content-center">
             <label class="col-3">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
             <div class="col-5">
-                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV.Id" aria-hidden="true"></i></a>
-                 @if (Model.ReviewStatus == ApplicationStatus.NotCompleted || Model.ReviewStatus == ApplicationStatus.Rejected)
-            {
-                 <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
-
-            }
+                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedMotivation.Id" aria-hidden="true"></i></a>
+               @if(Model.ReviewStatus == ApplicationStatus.NotCompleted)
+               {
+                    <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+               }
             </div>
         </div>
     }

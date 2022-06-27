@@ -164,13 +164,13 @@ namespace Erasmus.Web.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public IActionResult Approve(Guid id)
+        [HttpPost]
+        public IActionResult Approve(Guid id, [FromBody] ReviewApplicationDto applicationDto)
         {
             var application = _applicationService.Get(id);
             try
             {
-                _applicationService.Approve(application);
+                _applicationService.Approve(application, applicationDto?.feedback);
                 _notyfService.Success("Application approved");
             }
             catch (Exception ex)
@@ -181,14 +181,22 @@ namespace Erasmus.Web.Controllers
             return RedirectToAction("ApplicationsForEvent", new { id = application.NonGovProject.Id });
         }
 
-        [HttpGet]
-        public IActionResult Reject(Guid id)
+        [HttpPost]
+        public IActionResult Reject(Guid id, [FromBody] ReviewApplicationDto rejectApplicationDto)
         {
             var application = _applicationService.Get(id);
             try
             {
-                _applicationService.Reject(application);
-                _notyfService.Success("Application rejected");
+                if(application != null)
+                {
+                    _applicationService.Reject(application, rejectApplicationDto?.feedback);
+                    _notyfService.Success("Application rejected");
+                }
+                else
+                {
+                    _notyfService.Error("There was an error, please try again later");
+                }
+                
             }
             catch (Exception ex)
             {

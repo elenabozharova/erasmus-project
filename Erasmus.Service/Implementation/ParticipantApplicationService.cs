@@ -21,13 +21,18 @@ namespace Erasmus.Service.Implementation
             _organizerService = organizerService;
         }
 
-        public ParticipantApplication Approve(ParticipantApplication application)
+        public ParticipantApplication Approve(ParticipantApplication application, string approveFeedback = "")
         {
             application.ReviewStatus = ApplicationStatus.Approved;
             _repository.Update(application);
             // send mail to participant
-            _organizerService.SendMailForApprovedApplicationAsync(application);
+            _organizerService.SendMailForApprovedApplicationAsync(application, approveFeedback);
             return application;
+        }
+
+        public void Delete(ParticipantApplication application)
+        {
+            _repository.Delete(application);
         }
 
         public ParticipantApplication Get(Guid id)
@@ -50,12 +55,12 @@ namespace Erasmus.Service.Implementation
             _repository.Insert(application);
         }
 
-        public ParticipantApplication Reject(ParticipantApplication application)
+        public ParticipantApplication Reject(ParticipantApplication application, string rejectFeedback = "")
         {
             application.ReviewStatus = ApplicationStatus.Rejected;
             _repository.Update(application);
             // send mail to participant
-            _organizerService.SendMailForApprovedApplicationAsync(application);
+            _organizerService.SendMailForRejectedApplicationAsync(application, rejectFeedback);
             return application;
         }
 
