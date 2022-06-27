@@ -58,8 +58,8 @@ namespace Erasmus.Service.Implementation
 
             image.ContentId = MimeUtils.GenerateMessageId();
             b.HtmlBody = string.Format(@"<body><p>Hi 👋,</p>
-                    <p>""{1}""</p><br>
-                    <p>{2}, <br/>
+                    <p>{1}</p><br>
+                    <p>{2} <br/>
                     Erasmus team</p>
                     <img width='150px' height='150x' src=""cid:{0}""/></body>",image.ContentId, email.Content, message);
             emailMessage.Body = b.ToMessageBody();
