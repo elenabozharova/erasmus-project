@@ -279,7 +279,7 @@ namespace Erasmus.Web.Controllers
                         _notyfService.Error("The file is not found!");
                         break;
                 }
-                return View();
+                return RedirectToAction("UploadFiles","Participant", new { eventId = file.ProjectId} );
             }
         }
 
@@ -298,7 +298,7 @@ namespace Erasmus.Web.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("Details", "NonGovProjects", new { id = id });
+                return RedirectToAction("Details", "NonGovProjects", new { eventid = id });
             }
         }
 

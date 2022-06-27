@@ -7,6 +7,6 @@ namespace Erasmus.Domain.DTO
 {
     public class NonGovProjectsDto
     {
-        public List<NonGovProject> Projects { get; set; }
+        public List<ProjectDto> Projects { get; set; }
     }
 }

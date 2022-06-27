@@ -45,6 +45,14 @@ namespace Erasmus.Service.Implementation
 
         public async Task<bool> Apply(string participantId, Guid projectId)
         {
+            // if the participant has already applied, he should not be able to apply again
+            var previousApplication = _participantApplicationRepository.GetForParticipantAndProject(participantId, projectId);
+            if(previousApplication != null)
+            {
+                // delete the previous application
+                _participantApplicationRepository.Delete(previousApplication);
+            }
+
             var participant = _participantRepository.Get(participantId);
             var project = _nonGovProjectRepository.Get(projectId);
             var files = _uploadedFileRepository.GetFilesForUserAndEvent(participantId, projectId);
@@ -60,7 +68,7 @@ namespace Erasmus.Service.Implementation
             };
             _participantApplicationRepository.Insert(application);
 
-            await SendMailToParticipant(participant, project, application.UploadedFiles);
+            await SendMailToParticipantForSubmittedApplication(participant, project, application.UploadedFiles);
             return true;
         }
 
@@ -103,7 +111,17 @@ namespace Erasmus.Service.Implementation
             return true;
         }
 
-        public async Task<bool> SendMailToParticipant(Participant participant, NonGovProject project, ICollection<UploadedFile> uploadedFiles)
+        public bool SendMailToOrganizer(string mail)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> SendMailToParticipant(Participant participant, NonGovProject project, ICollection<UploadedFile> files)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> SendMailToParticipantForSubmittedApplication(Participant participant, NonGovProject project, ICollection<UploadedFile> uploadedFiles)
         {
             Email email = new Email();
             StringBuilder sb = new StringBuilder();
@@ -115,7 +133,7 @@ namespace Erasmus.Service.Implementation
             email.Subject = "Application submitted";
             email.Sent = true;
             _emailRepository.Insert(email);
-            await Task.WhenAll(_emailService.SendMailAsync(email, uploadedFiles), SendMailToOrganizer(participant, project));
+            await Task.WhenAll(_emailService.SendMailAsync(email, "Good luck, ", uploadedFiles), SendMailToOrganizer(participant, project));
             return true;
         }
     }

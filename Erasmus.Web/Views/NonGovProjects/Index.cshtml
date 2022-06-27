@@ -10,56 +10,94 @@
     <link href="/css/NonGovProjectsIndex.css" rel="stylesheet" type="text/css">
 </head>
 <style>
-    .text-blue{
-           color: #263F6B;
+    .btn-applications{
+        margin-top:1rem;
+        width:22.5rem;
+    }
+    .btn-create {
+        margin-top: 5%;
+    }
+    .text-blue {
+        color: #263F6B;
+    }
+    .create-button
+    {
+        margin-bottom: 100px;
+    }
+
+    .project-date
+    {
+        font-size: 10pt;
+    }
+
+    .edit-btn-div{
+        margin-left: -568px;
+        margin-top: -50px;
     }
 </style>
 <div class="container w-75 text-blue">
-    <form class="form-inline my-2 my-lg-0 mb-5 text-blue" asp-controller="NonGovProjects" asp-action="Index" method="get">
+    <form class="form-inline my-2 my-lg-0 mb-5" asp-controller="NonGovProjects" asp-action="Index" method="get">
           <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="search" name="SearchString">
           <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" value="Filter"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
     <div class="mt-5 ">
-    @foreach(var project in Model.Projects)
+    @foreach(var record in Model.Projects)
     {
             <div class="card border-primary mb-3 w-100" style="width: 18rem;">
                 <div class="card-body row">
                     <div class="col-2 mr-5">
                         <div style="width: 200px; height: 200px;">
-                                @if (project.ProjectPhotoPath != null)
+                                @if (record.Project.ProjectPhotoPath != null)
                             {
-                                <img class="shape" src="~/projectimages/@project.ProjectPhotoPath" style="width: 200px; height: 200px;"/>
+                                <img class="shape" src="~/projectimages/@record.Project.ProjectPhotoPath" style="width: 200px; height: 200px;"/>
                             }
                         </div>
                     </div>
-          <div class="col-6 ml-5" style="margin-left:100px;">
-                <h5 class="card-title text-blue">@project.ProjectTitle</h5>
-                <p class="card-text text-blue">@project.ProjectDescription</p>
-                <div class="row w-100">
-                     <div class="">
-                       <a  class="btn btn-outline-primary col-4" asp-controller="NonGovProjects" asp-action="Details" asp-route-id="@project.Id">See more <i class="fa fa-info" aria-hidden="true"></i></a>
-                       @{
-                            if(!User.IsInRole("Organizer"))
-                            {
-                                <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventid="@project.Id" class="btn btn-primary col-4">Apply now</a>
+                    <div class="col-6 ml-5" style="margin-left:100px;">
+                        <h5 class="card-title text-blue">@record.Project.ProjectTitle</h5>
+                        <p class="card-text text-blue">@record.Project.ProjectDescription</p>
+                        <p class="project-date">Deadline for application: @record.Project.Deadline.ToShortDateString()</p>
+                        <p class="project-date">Start Date: @record.Project.StartDate.ToShortDateString()</p>
+                        <p class="project-date">End Date: @record.Project.EndDate.ToShortDateString()</p>
+                        <div class="row w-100">
+                             <div class="">
+                               <a  class="btn btn-outline-primary col-4" asp-controller="NonGovProjects" asp-action="Details" asp-route-eventid="@record.Project.Id">See more <i class="fa fa-info" aria-hidden="true"></i></a>
+                               @{
+                                    if(!User.IsInRole("Organizer"))
+                                    {
+                                        if(!@record.UserHasApplied)
+                                        {
+                                            <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventid="@record.Project.Id" class="btn btn-primary col-4">Apply now</a>
+                                        }
+                                        else
+                                        {
+                                           <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventid="@record.Project.Id" class="btn btn-primary col-4">See application</a>
+                                        }
+                                    }
+                               }
+                               @{
+                               // ORGANIZERS
+                               var canEdit = User.IsInRole("Organizer") && record.Project.NonGovProjectOrganizers !=null && record.Project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                               if(canEdit)
+                               {
+                                  <a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@record.Project.Id" class="edit-btn btn btn-outline-primary col-3"  ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                  <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@record.Project.Id" class="delete-btn btn btn-outline-danger col-3"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                  <a asp-controller="Organizer" asp-action="ApplicationsForEvent" class="btn btn-outline-primary btn-applications" asp-route-id="@record.Project.Id">See all applications</a>
+                               }
                             }
-                       }
-                       @{
-                       var canEdit = User.IsInRole("Organizer") && project.NonGovProjectOrganizers !=null && project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
-                       if(canEdit)
-                       {
-                          <a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@project.Id" class="edit-btn btn btn-outline-primary col-3"  ><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                          <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@project.Id" class="delete-btn btn btn-outline-danger col-3"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                       }
-                   }
 
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                </div>
-              
-          </div>
-      </div>
-      </div>
+            </div>
     }
+</div>
+<div class="edit-btn-div d-flex justify-content-start">
+@if(User.IsInRole("Organizer"))
+{
+   <a class="btn-create btn btn-lg btn-block btn-outline-primary " asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
+}
 </div>
 
 <div class="mt-5 text-blue mb-5">
@@ -73,11 +111,6 @@
     </p>
     <br/>
 </div>
-@if(User.IsInRole("Organizer"))
-{
-   <a class="btn btn-outline-primary create-button" asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
-}
-
 
 </div>
 

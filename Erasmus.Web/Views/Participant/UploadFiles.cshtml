@@ -6,9 +6,14 @@
 *@
 @{
 }
+
+<head>
+    <link href="/css/approve_reject.css" rel="stylesheet" type="text/css">
+</head>
 <style>
     .text-blue {
         color: #263F6B;
+        font-family:sans-serif;
     }
 </style>
 <form method="post" asp-controller="Participant" asp-action="UploadFiles" enctype="multipart/form-data" class="w-75 justify-content-center mx-auto text-blue text-center">
@@ -53,7 +58,10 @@
         <div class="col-5">
         <div>
             <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedCV.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV.Id" aria-hidden="true"></i></a>
-            <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedCV.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            @if(Model.ReviewStatus == ApplicationStatus.NotCompleted)
+            {
+               <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedCV.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>         
+            }
         </div>
         </div>
         </div>
@@ -75,28 +83,62 @@
     else
     {
         <div class="row justify-content-center">
-            <label class="col-3 ml-5">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
+            <label class="col-3">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
             <div class="col-5">
-                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV.Id" aria-hidden="true"></i></a>
-                <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedMotivation.Id" aria-hidden="true"></i></a>
+               @if(Model.ReviewStatus == ApplicationStatus.NotCompleted)
+               {
+                    <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+               }
             </div>
         </div>
     }
-    <button id="btn-submit" type="submit" class="btn text-center text-light justify-content-center mt-3" style="display:none; background-color:#263F6B; margin-left: 410px;">Upload files</button>
+    <button id="btn-submit" type="submit" class="btn text-center text-light justify-content-center mt-3" style="display:none; background-color:#263F6B;">Upload files</button>
 </form>
 
 @if (Model.ReviewStatus == ApplicationStatus.NotCompleted)
 {
-    <div class="row justify-content-center">
+    <div class="row justify-content-center col-7" style="margin-left:270px;">
          <form asp-method="post" asp-action="Apply" asp-controller="Participant">
             <input type="hidden" asp-for="ParticipantId" />
             <input type="hidden" asp-for="ProjectId" />
             <div class="submit-div">
-                <button id="submit-application-btn" type="submit" class="btn btn-outline-primary btn-lg btn-block justify-content-center mt-3" title="Please upload CV and Motivaton Letter to apply">Submit application for review</button>
+                <button id="submit-application-btn" type="submit" class="button-width btn btn-outline-primary btn-lg btn-block justify-content-center mt-3" title="Please upload CV and Motivaton Letter to apply">Submit application for review</button>
             </div>    
         </form> 
     </div>
 }
+else if(Model.ReviewStatus == ApplicationStatus.InReview)
+{
+    <div class="review-container">
+       <div class="review"> 
+           <h3 class="review-title">Your application is sent for review to the organizer!</h3>
+       </div>
+    </div>
+    
+}
+else if(Model.ReviewStatus == ApplicationStatus.Approved)
+{<div class="message-approve-container">
+    <div class="approved">
+        <h3 class="approved-title">Your application is approved!</h3>
+        <p class="approved-text">Please be ready before the start date.</p>
+    </div>
+</div>
+}
+else if(Model.ReviewStatus == ApplicationStatus.Rejected)
+{
+    <div class="message-rejected-container">
+    <div class="rejected">
+        <h3 class="rejected-title">Your application is rejected</h3>
+    </div>
+</div>
+}
+  <div class="row justify-content-center mt-3 col-7 " style="margin-left:270px">
+    <a class="button-width btn btn-lg btn-block text-light margin-bot" asp-area="" asp-controller="NonGovProjects" asp-action="Index" style="background-color:#263F6B;">
+        <i class="fa fa-bullhorn" aria-hidden="true"></i> Back to all active projects</a>
+
+    </div>
+
 
 
 @section Scripts{
@@ -110,8 +152,9 @@
                 disableElement($("#submit-application-btn"));
             }
             else{
-                enableElement()
+                enableElement($("#submit-application-btn"));
             }
+
             $('.file-input').click(function(){
                 $('#btn-submit').show();
             });
