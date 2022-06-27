@@ -122,7 +122,7 @@ namespace Erasmus.Service.Implementation
             IList<NonGovProjectOrganizer> records = _nonGovProjectOrganizerRepository.GetNonGovProjectOrganizersForProject(projectId);
 
             NonGovProjectOrganizer nonGovProjectOrganizer =  records.FirstOrDefault();
-            return _nonGovProjectOrganizerRepository.Get(nonGovProjectOrganizer.OrganizerId);
+            return nonGovProjectOrganizer;
         }
 
         public List<NonGovProject> GetProjectsOrganizer(string organizerId)
