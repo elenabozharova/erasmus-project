@@ -182,7 +182,7 @@ namespace Erasmus.Web.Controllers
                         _notyfService.Error("The file is not found!");
                         break;
                 }
-                return View();
+                return RedirectToAction("UploadFiles","Participant", new { eventId = file.ProjectId} );
             }
         }
 

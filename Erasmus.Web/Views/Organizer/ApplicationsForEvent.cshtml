@@ -11,7 +11,22 @@
 <style>
     .project-photo
     {
-        max-width: 300px;
+        max-width: 90%;
+    }
+
+    .approved-div
+    {
+        color: green;
+    }
+
+    .rejected-div
+    {
+        color: red;
+    }
+
+    .inReview-div
+    {
+        color: darkblue;
     }
 </style>
 <h1>Applications for @Model.ProjectName</h1>
@@ -27,7 +42,7 @@ else
     foreach(var application in Model.Applications)
     {
         <div class="row application">
-            <div class="col-3">
+            <div class="d-flex col-6 justify-content-center">
                 <img class="project-photo" src="~/projectimages/@application.NonGovProject.ProjectPhotoPath"/>
             </div>
             <div class="col-6 app">
@@ -41,17 +56,105 @@ else
                    <a class="btn btn-primary btn-small" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@file.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@file.Id" aria-hidden="true"></i></a>
                     </div>
                 }
+
+                @if(application.ReviewStatus == Erasmus.Domain.Domain.ApplicationStatus.Approved)
+                {
+                    <p class="approved-div">Approved application</p>
+                }
+
+                @if(application.ReviewStatus == Erasmus.Domain.Domain.ApplicationStatus.Rejected)
+                {
+                    <p class="rejected-div">Rejected application</p>
+                }
+
                 @if(application.ReviewStatus == Erasmus.Domain.Domain.ApplicationStatus.InReview)
                 {
-                    <a asp-controller="Organizer" asp-action="Approve" asp-route-id="@application.Id" class="btn btn-success">Approve</a>
-                    <a asp-controller="Organizer" asp-action="Reject" asp-route-id="@application.Id" class="btn btn-danger">Reject</a>
+                  <p class="inReview-div">Application in review</p>
                 }
-                else
+
+                @if(application.ReviewStatus == Erasmus.Domain.Domain.ApplicationStatus.InReview)
                 {
-                    <p class="status">@application.ReviewStatus</p>
+                    <a id="approve-btn" class="btn btn-success" data-id="@application.Id">Approve</a>
+@*                    <a asp-controller="Organizer" asp-action="Approve" asp-route-id="@application.Id" class="btn btn-success">Approve</a>
+*@@*                    <a id="reject-btn" asp-controller="Organizer" asp-action="Reject" asp-route-id="@application.Id" class="btn btn-danger">Reject</a>
+*@                  <a id="reject-btn" class="btn btn-danger" data-id="@application.Id">Reject</a>
+                    <input id="rejectMsg" value="" type="hidden"/> 
                 }
+
+                
             </div>
         </div>
 
+       <div id="reviewDialog" class="modal" style="display:none" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 id="review-type" class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <textarea id="review-feedback" class="form-control"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button id="submit-btn" type="button" class="btn btn-primary">Done</button>
+              </div>
+            </div>
+          </div>
+    </div>
     }
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $("#reject-btn").click(function(){
+            debugger;
+            var id = $(this).data("id");
+            $("#reviewDialog").modal();
+            $("#reviewDialog #review-type").text("Reject feedback");
+           
+            $("#submit-btn").click(function(){
+                var message = $("#reviewDialog #review-feedback").val();
+                debugger;
+                var obj = {};
+                obj.feedback = message;
+                $.post({
+                    "url": "/Organizer/Reject?id=" + id,
+                    "data": JSON.stringify(obj),
+                    "contentType": "application/json",
+                    "success": function()
+                    {
+                       
+                    }
+            });
+            $("#reviewDialog").modal('hide');
+            });
+        });
+
+         $("#approve-btn").click(function(){
+            var id = $(this).data("id");
+            $("#reviewDialog").modal();
+            $("#reviewDialog #review-type").text("Approve feedback");
+           
+            $("#submit-btn").click(function(){
+                var message = $("#reviewDialog #review-feedback").val();
+                debugger;
+                var obj = {};
+                obj.feedback = message;
+                $.post({
+                    "url": "/Organizer/Approve?id=" + id,
+                    "data": JSON.stringify(obj),
+                    "contentType": "application/json",
+                    "success": function()
+                    {
+                        
+                    }
+            });
+            $("#reviewDialog").modal('hide');
+            });
+        });
+    </script>
+
 }

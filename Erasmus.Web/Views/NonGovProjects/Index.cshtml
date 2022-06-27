@@ -6,6 +6,9 @@
 @{
     // this view lists all non government projects
 }
+<head>
+    <link href="/css/NonGovProjectsIndex.css" rel="stylesheet" type="text/css">
+</head>
 <style>
     .btn-applications{
         margin-top:1rem;
@@ -16,6 +19,10 @@
     }
     .text-blue {
         color: #263F6B;
+    }
+    .create-button
+    {
+        margin-bottom: 100px;
     }
 </style>
 <div class="container w-75 text-blue">
@@ -89,6 +96,12 @@
     </p>
     <br/>
 </div>
+@if(User.IsInRole("Organizer"))
+{
+   <a class="btn btn-outline-primary create-button" asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
+}
+
+
 </div>
 
 

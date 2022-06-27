@@ -82,7 +82,7 @@
     else
     {
         <div class="row justify-content-center">
-            <label class="col-3 ml-5">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
+            <label class="col-3">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
             <div class="col-5">
                 <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedMotivation.Id" aria-hidden="true"></i></a>
                @if(Model.ReviewStatus == ApplicationStatus.NotCompleted)
@@ -92,12 +92,12 @@
             </div>
         </div>
     }
-    <button id="btn-submit" type="submit" class="btn text-center text-light justify-content-center mt-3" style="display:none; background-color:#263F6B; margin-left: 410px;">Upload files</button>
+    <button id="btn-submit" type="submit" class="btn text-center text-light justify-content-center mt-3" style="display:none; background-color:#263F6B;">Upload files</button>
 </form>
 
 @if (Model.ReviewStatus == ApplicationStatus.NotCompleted)
 {
-    <div class="row justify-content-center">
+    <div class="row justify-content-center col-7" style="margin-left:270px;">
          <form asp-method="post" asp-action="Apply" asp-controller="Participant">
             <input type="hidden" asp-for="ParticipantId" />
             <input type="hidden" asp-for="ProjectId" />
@@ -132,6 +132,12 @@ else if(Model.ReviewStatus == ApplicationStatus.Rejected)
     </div>
 </div>
 }
+  <div class="row justify-content-center mt-3 col-7 " style="margin-left:270px">
+    <a class="btn btn-lg btn-block text-light" asp-area="" asp-controller="NonGovProjects" asp-action="Index" style="background-color:#263F6B;">
+        <i class="fa fa-bullhorn" aria-hidden="true"></i> Back to all active projects</a>
+
+    </div>
+
 
 
 @section Scripts{

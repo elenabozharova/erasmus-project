@@ -55,12 +55,19 @@ namespace Erasmus.Service.Implementation
             return _organizerRepository.GetUser(organizerId);
         }
 
-        public async Task<bool> SendMailForApprovedApplicationAsync(ParticipantApplication application)
+        public async Task<bool> SendMailForApprovedApplicationAsync(ParticipantApplication application, string approveFeedback = "")
         {
             Email email = new Email();
             StringBuilder sb = new StringBuilder();
             email.MailTo = application.Participant.BaseRecord.Email;
             sb.AppendLine("The application for the event: " + string.Concat("'", application.NonGovProject.ProjectTitle, ",") + "has been approved by the organizer");
+            sb.AppendLine(Environment.NewLine);
+
+            if (!string.IsNullOrEmpty(approveFeedback))
+            {
+                sb.AppendLine("Organizer comments:");
+                sb.AppendLine(approveFeedback);
+            }
             string Content = sb.ToString();
             email.Content = Content;
             email.Subject = "Application approved";
@@ -70,12 +77,18 @@ namespace Erasmus.Service.Implementation
             return true;
         }
 
-        public async Task<bool> SendMailForRejectedApplicationAsync(ParticipantApplication application)
+        public async Task<bool> SendMailForRejectedApplicationAsync(ParticipantApplication application, string rejectFeedback = "")
         {
             Email email = new Email();
             StringBuilder sb = new StringBuilder();
             email.MailTo = application.Participant.BaseRecord.Email;
-            sb.AppendLine("The application for the event: " + string.Concat("'", application.NonGovProject.ProjectTitle, ",") + "has been approved by the organizer");
+            sb.AppendLine("The application for the event: " + string.Concat("'", application.NonGovProject.ProjectTitle, ",") + "has been rejected by the organizer.");
+            sb.AppendLine(Environment.NewLine);
+            if (!string.IsNullOrEmpty(rejectFeedback))
+            {
+                sb.AppendLine("Organizer comments: ");
+                sb.AppendLine(rejectFeedback);
+            }
             string Content = sb.ToString();
             email.Content = Content;
             email.Subject = "Application rejected";
