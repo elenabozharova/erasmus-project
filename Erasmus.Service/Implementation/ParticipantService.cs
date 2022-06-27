@@ -1,4 +1,5 @@
-﻿using Erasmus.Domain.Domain;
+﻿using AutoMapper;
+using Erasmus.Domain.Domain;
 using Erasmus.Domain.DTO;
 using Erasmus.Repository.Interface;
 using Erasmus.Service.Interface;
@@ -21,9 +22,14 @@ namespace Erasmus.Service.Implementation
         private readonly IUploadedFileRepository _uploadedFileRepository;
         private readonly IRepository<Email> _emailRepository;
         private readonly IEmailService _emailService;
+        private readonly INonGovProjectService _nonGovProjectService;
+        private readonly IOrganizerRepository _organizerRepository;
+        private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
         public ParticipantService(IParticipantRepository participantRepository, INonGovProjectRepository nonGovProjectRepository,
             IParticipantApplicationRepository participantApplicationRepository, IUploadedFileRepository uploadedFileRepository,
-            IRepository<Email> emailRepository, IEmailService emailService)
+            IRepository<Email> emailRepository, IEmailService emailService, INonGovProjectService nonGovProjectService, IOrganizerRepository organizerRepository,
+             IMapper mapper, IUserRepository userRepository)
         {
             _participantRepository = participantRepository;
             _nonGovProjectRepository = nonGovProjectRepository;
@@ -31,6 +37,10 @@ namespace Erasmus.Service.Implementation
             _uploadedFileRepository = uploadedFileRepository;
             _emailRepository = emailRepository;
             _emailService = emailService;
+            _nonGovProjectService = nonGovProjectService;
+            _organizerRepository = organizerRepository;
+            _mapper = mapper;   
+            _userRepository = userRepository;
         }
 
         public async Task<bool> Apply(string participantId, Guid projectId)
@@ -51,7 +61,7 @@ namespace Erasmus.Service.Implementation
                 NonGovProject = project,
                 NonGovProjectId = projectId,
                 Participant = participant,
-                ParticipantId = participant.Id,
+                ParticipantId = participantId,
                 ParticipantUserId = participant.UserId,
                 UploadedFiles = files,
                 ReviewStatus = ApplicationStatus.InReview
@@ -62,12 +72,51 @@ namespace Erasmus.Service.Implementation
             return true;
         }
 
+        public void Edit(ParticipantProfileDto model)
+        {
+            var participant = _participantRepository.Get(model.ParticipantId);
+            var user = _participantRepository.GetParticipantFromBase(model.ParticipantId);
+            _mapper.Map(model, participant);
+            _mapper.Map(model, user);
+            _participantRepository.Update(participant);
+            _userRepository.Update(user);
+        }
+
         public Participant Get(string participantId)
         {
             return _participantRepository.Get(participantId);
         }
+        public ErasmusUser GetUser(string participantId)
+        {
+             return _participantRepository.GetUser(participantId);
+        }
+
+        public async Task<bool> SendMailToOrganizer(Participant participant, NonGovProject project)
+        {
+            NonGovProjectOrganizer nonGovProjectOrganizer = _nonGovProjectService.GetNonGovProjectOrganizer(project.Id);
+            if (nonGovProjectOrganizer == null) {
+                return true;
+            }
+            ErasmusUser organizer = _organizerRepository.GetUser(nonGovProjectOrganizer.OrganizerId);
+            Email email = new Email();
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("You have one new participant application for your project: " + string.Concat("'", project.ProjectTitle, "'.") + "The participant with email " + string.Concat("", participant.BaseRecord.Email, ",") + " send his application right now. You can check all details in your organizer profile.");
+
+            email.MailTo = organizer.Email;
+            email.Subject = "New application for the project " + project.ProjectTitle;
+            email.Content = stringBuilder.ToString();
+            email.Sent = true;
+            _emailRepository.Insert(email);
+            await _emailService.SendMailToOrganizerAsync(email);
+            return true;
+        }
 
         public bool SendMailToOrganizer(string mail)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> SendMailToParticipant(Participant participant, NonGovProject project, ICollection<UploadedFile> files)
         {
             throw new NotImplementedException();
         }
@@ -84,7 +133,7 @@ namespace Erasmus.Service.Implementation
             email.Subject = "Application submitted";
             email.Sent = true;
             _emailRepository.Insert(email);
-            await _emailService.SendMailAsync(email, "Good luck, ", uploadedFiles);
+            await Task.WhenAll(_emailService.SendMailAsync(email, "Good luck, ", uploadedFiles), SendMailToOrganizer(participant, project));
             return true;
         }
     }

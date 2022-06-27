@@ -9,6 +9,7 @@ namespace Erasmus.Service.Interface
     public interface IEmailService
     {
         Task SendMailAsync(Email email, string message, ICollection<UploadedFile> uploadedFiles);
+        Task SendMailToOrganizerAsync(Email email);
         Task SendUnsentMailsAsync(List<Email> emails);
     }
 }

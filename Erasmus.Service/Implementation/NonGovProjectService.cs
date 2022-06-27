@@ -19,9 +19,11 @@ namespace Erasmus.Service.Implementation
         private readonly IRepository<NonGovProjectOrganizer> _organizerToProjectRepsoitory;
         private readonly IRepository<City> _cityRepository;
         private readonly IParticipantApplicationService _participantApplicationService;
+        private readonly INonGovProjectOrganizerRepository _nonGovProjectOrganizerRepository;
         private readonly IMapper _mapper;
+
         public NonGovProjectService(INonGovProjectRepository repository, IOrganizerRepository organizerRepository, IRepository<NonGovProjectOrganizer> organizerToProjectRepository, IRepository<City> cityRepository,
-            IParticipantApplicationService participantApplicationService, IMapper mapper)
+            IParticipantApplicationService participantApplicationService, IMapper mapper, INonGovProjectOrganizerRepository nonGovProjectOrganizerRepository)
         {
             _repository = repository;
             _organizerRepository = organizerRepository;
@@ -29,7 +31,9 @@ namespace Erasmus.Service.Implementation
             _cityRepository = cityRepository;
             _participantApplicationService = participantApplicationService;
             _mapper = mapper;
+            _nonGovProjectOrganizerRepository = nonGovProjectOrganizerRepository;
         }
+
         public bool Create(NonGovProjectDto project)
         {
             try
@@ -120,6 +124,14 @@ namespace Erasmus.Service.Implementation
         public List<NonGovProject> GetAll()
         {
             return _repository.GetAll().ToList();
+        }
+
+        public NonGovProjectOrganizer GetNonGovProjectOrganizer(Guid projectId)
+        {
+            IList<NonGovProjectOrganizer> records = _nonGovProjectOrganizerRepository.GetNonGovProjectOrganizersForProject(projectId);
+
+            NonGovProjectOrganizer nonGovProjectOrganizer =  records.FirstOrDefault();
+            return nonGovProjectOrganizer;
         }
 
         public List<NonGovProject> GetProjectsOrganizer(string organizerId)
