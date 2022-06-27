@@ -63,7 +63,7 @@ namespace Erasmus.Service.Implementation
             sb.AppendLine("The application for the event: " + string.Concat("'", application.NonGovProject.ProjectTitle, ",") + "has been approved by the organizer");
             if(!string.IsNullOrEmpty(approveFeedback))
             {
-                sb.AppendLine("Organizer comments:");
+                sb.AppendLine("<br/><br/><h3 style='font-family:arial'>Organizer comments</h3><br/>");
                 sb.AppendLine(approveFeedback);
             }
             string Content = sb.ToString();
@@ -83,7 +83,7 @@ namespace Erasmus.Service.Implementation
             sb.AppendLine("The application for the event: " + string.Concat("'", application.NonGovProject.ProjectTitle, ",") + "has been rejected by the organizer.");
             if(!string.IsNullOrEmpty(rejectFeedback))
             {
-                sb.AppendLine("Organizer comments: ");
+                sb.AppendLine("<br/><br/><h3 style='font-family:arial'>Organizer comments</h3><br/> ");
                 sb.AppendLine(rejectFeedback);
             }
             string Content = sb.ToString();

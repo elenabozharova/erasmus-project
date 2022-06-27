@@ -28,6 +28,11 @@
     {
         color: darkblue;
     }
+
+    .application:last {
+        margin-bottom: 50px;
+    }
+
 </style>
 <h1>Applications for @Model.ProjectName</h1>
 <hr />
@@ -80,6 +85,8 @@ else
 *@                  <a id="reject-btn" class="btn btn-danger" data-id="@application.Id">Reject</a>
                     <input id="rejectMsg" value="" type="hidden"/> 
                 }
+                <br/>
+                <br/>
 
                 
             </div>
