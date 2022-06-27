@@ -61,7 +61,9 @@ namespace Erasmus.Service.Implementation
             StringBuilder sb = new StringBuilder();
             email.MailTo = application.Participant.BaseRecord.Email;
             sb.AppendLine("The application for the event: " + string.Concat("'", application.NonGovProject.ProjectTitle, ",") + "has been approved by the organizer");
-            if(!string.IsNullOrEmpty(approveFeedback))
+            sb.AppendLine(Environment.NewLine);
+
+            if (!string.IsNullOrEmpty(approveFeedback))
             {
                 sb.AppendLine("Organizer comments:");
                 sb.AppendLine(approveFeedback);
@@ -81,7 +83,8 @@ namespace Erasmus.Service.Implementation
             StringBuilder sb = new StringBuilder();
             email.MailTo = application.Participant.BaseRecord.Email;
             sb.AppendLine("The application for the event: " + string.Concat("'", application.NonGovProject.ProjectTitle, ",") + "has been rejected by the organizer.");
-            if(!string.IsNullOrEmpty(rejectFeedback))
+            sb.AppendLine(Environment.NewLine);
+            if (!string.IsNullOrEmpty(rejectFeedback))
             {
                 sb.AppendLine("Organizer comments: ");
                 sb.AppendLine(rejectFeedback);
