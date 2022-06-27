@@ -4,20 +4,16 @@
 *@
 @{
 }
-<head>
-    <link rel="stylesheet" href="~/css/edit-profile.css" />
-</head>
 
 @if(!string.IsNullOrEmpty(Model.ProfilePhotoPath))
 {
-    <div class="profile-picture">
     <img src="~/images/@Model.ProfilePhotoPath"/>
-    </div>
 }
 
-<form method="post" asp-controller="Organizer" asp-action="UploadPhoto" enctype="multipart/form-data">
+<form method="post" asp-controller="Participant" asp-action="UploadPhoto" enctype="multipart/form-data">
     <input type="hidden" asp-for="UserId"/>
     <input type="file" asp-for="ProfilePhoto"/>
     <button type="submit" class="btn btn-primary">Change Photo</button>
 </form>
+
 

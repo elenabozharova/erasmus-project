@@ -11,8 +11,9 @@ namespace Erasmus.Service.Interface
     {
         Participant Get(string participantId);
         Task<bool> Apply(string participantId, Guid projectId);
+        ErasmusUser GetUser(string participantId);
         Task<bool> SendMailToParticipant(Participant participant, NonGovProject project, ICollection<UploadedFile> files);
         Task<bool> SendMailToOrganizer(Participant participant, NonGovProject project);
-
+        public void Edit(ParticipantProfileDto model);
     }
 }

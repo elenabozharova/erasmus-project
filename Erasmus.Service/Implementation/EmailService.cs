@@ -71,7 +71,7 @@ namespace Erasmus.Service.Implementation
 
                     if(!string.IsNullOrEmpty(_settings.SmtpUserName))
                     {
-                        await smtp.AuthenticateAsync(_settings.SmtpUserName, _config.GetSection("MailKit").Value.ToString());
+                        await smtp.AuthenticateAsync(_settings.SmtpUserName, "diqfeibjinzockmq");
                     }
 
                     await smtp.SendAsync(emailMessage);
@@ -116,7 +116,7 @@ namespace Erasmus.Service.Implementation
 
                     if (!string.IsNullOrEmpty(_settings.SmtpUserName))
                     {
-                        await smtp.AuthenticateAsync(_settings.SmtpUserName, _config.GetSection("MailKit").Value.ToString());
+                        await smtp.AuthenticateAsync(_settings.SmtpUserName, "diqfeibjinzockmq");
                     }
 
                     await smtp.SendAsync(emailMessage);

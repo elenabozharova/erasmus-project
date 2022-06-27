@@ -1,4 +1,4 @@
-﻿@model Erasmus.Domain.DTO.OrganizerProfileDto
+﻿@model Erasmus.Domain.DTO.ParticipantProfileDto
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -6,7 +6,7 @@
 }
 
 <head>
-    <link rel="stylesheet" href="~/css/organizer-profile.css" />
+    <link rel="stylesheet" href="~/css/participant-profile.css" />
     
 </head>
 
@@ -21,10 +21,10 @@
                         }
                 </div>
                 <div class="row">
-                    <a asp-controller="Organizer" asp-action="EditProfilePhoto" asp-route-organizerId="@Model.OrganizerId" class="btn button-upload btn-edit btn-outline-success">Upload a profile picture</a>
+                    <a asp-controller="Participant" asp-action="EditProfilePhoto" asp-route-participantId="@Model.ParticipantId" class="btn button-upload btn-edit btn-outline-success">Upload a profile picture</a>
                 </div>
         </div>
-        <div class="col-9 right">
+        <div class="col-9">
                 <label form-control>First Name</label>
                 @if(!string.IsNullOrEmpty(Model.FirstName))
                 {
@@ -44,27 +44,7 @@
                 }
 
                 <hr />
-
-                 <label form-control>Organization Name</label>
-                @if(!string.IsNullOrEmpty(Model.OrganizationName))
-                {
-                    <p>@Model.OrganizationName</p>
-                }
-                else
-                {
-                    <p>Organization Name not inserted</p>
-                }
-
-                 <label form-control>Organization Contact</label>
-                @if(!string.IsNullOrEmpty(Model.OrganizationContact))
-                {
-                    <p>@Model.OrganizationContact</p>   
-                } 
-                else
-                {
-                    <p>Organization Contact not inserted</p>
-                }
-                <a asp-controller="Organizer" asp-action="Edit" asp-route-id="@Model.OrganizerId" class="btn btn-outline-success btn-edit">Edit Profile</a>
+                <a asp-controller="Participant" asp-action="Edit" asp-route-id="@Model.ParticipantId" class="btn btn-outline-success btn-edit">Edit Profile</a>
         </div>
     </div>
     
