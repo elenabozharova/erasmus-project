@@ -100,6 +100,47 @@
     margin-bottom:1rem;
 }
 
-.application:last-child{
-    margin-bottom:4rem;
+h2, h1 {
+    color: #263F6B;
+    font-family:sans-serif;
+}
+
+.button-width{
+    width:20rem;
+}
+
+#submit-application-btn{
+    margin-left:190px;
+}
+
+.margin-bot{
+    margin-bottom:5rem;
+}
+
+.btn-approve{
+    color:white;
+    width:30%;
+    
+}
+
+.btn-reject {
+    width: 30%;
+    color: white;
+    
+}
+.buttons{
+    margin-bottom:1rem;
+    color:white;
+    margin-left:2.5rem;
+}
+.right {
+    padding-left:5rem;
+}
+
+.left{
+    padding:1rem;
+}
+
+.application{
+    margin-bottom:3rem;
 }
