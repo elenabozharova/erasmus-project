@@ -6,6 +6,6 @@ namespace Erasmus.Domain.Domain
 {
     public enum Role
     {
-        Participant,Organizer, Admin 
+        Participant,Organizer
     }
 }

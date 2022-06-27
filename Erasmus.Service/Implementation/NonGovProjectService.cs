@@ -18,13 +18,16 @@ namespace Erasmus.Service.Implementation
         private readonly IOrganizerRepository _organizerRepository;
         private readonly IRepository<NonGovProjectOrganizer> _organizerToProjectRepsoitory;
         private readonly IRepository<City> _cityRepository;
+        private readonly IParticipantApplicationService _participantApplicationService;
         private readonly IMapper _mapper;
-        public NonGovProjectService(INonGovProjectRepository repository, IOrganizerRepository organizerRepository, IRepository<NonGovProjectOrganizer> organizerToProjectRepository, IRepository<City> cityRepository, IMapper mapper)
+        public NonGovProjectService(INonGovProjectRepository repository, IOrganizerRepository organizerRepository, IRepository<NonGovProjectOrganizer> organizerToProjectRepository, IRepository<City> cityRepository,
+            IParticipantApplicationService participantApplicationService, IMapper mapper)
         {
             _repository = repository;
             _organizerRepository = organizerRepository;
             _organizerToProjectRepsoitory = organizerToProjectRepository;
             _cityRepository = cityRepository;
+            _participantApplicationService = participantApplicationService;
             _mapper = mapper;
         }
         public bool Create(NonGovProjectDto project)
@@ -69,11 +72,18 @@ namespace Erasmus.Service.Implementation
             {
                 var project = _repository.Get(id);
                 
-                // delete all records in M-N project - orgniser table
+                // delete all records in M-N project - organiser table
                 IList<NonGovProjectOrganizer> records = _organizerToProjectRepsoitory.GetAll().Where(z => z.NonGovProjectId == id).ToList();
                 foreach(var record in records)
                 {
                     _organizerToProjectRepsoitory.Delete(record);
+                }
+
+                // delete al applications for event
+                var applications = _participantApplicationService.GetAllForProject(id);
+                foreach(var application in applications)
+                {
+                    _participantApplicationService.Delete(application);
                 }
 
                 _repository.Delete(project);
