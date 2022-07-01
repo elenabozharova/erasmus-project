@@ -34,9 +34,11 @@ namespace Erasmus.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            // services.AddDbContext<ApplicationDbContext>(options =>
+            //     options.UseSql  Server(
+            //         Configuration.GetConnectionString("DefaultConnection")));
+
+            string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");  
 
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 
@@ -75,9 +77,11 @@ namespace Erasmus.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext dbContext)
+
         {
 
+            dbContext.Database.Migrate();
             app.UseNotyf();
 
 
