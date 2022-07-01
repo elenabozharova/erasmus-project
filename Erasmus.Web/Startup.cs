@@ -39,7 +39,7 @@ namespace Erasmus.Web
             //         Configuration.GetConnectionString("DefaultConnection")));
 
             string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");  
-            services.addDbContext<ApplicationDbContext>(options => options.UseNpgsql(mysqlConnectionStr));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(mySqlConnectionStr));
 
 
 
